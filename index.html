@@ -86,6 +86,10 @@
             font-weight: 600;
             transition: all 0.3s;
             box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            font-size: 15px;
         }
         .nav-btn:hover {
             background: #4f46e5;
@@ -150,6 +154,7 @@
             display: inline-block;
             border: none;
             cursor: pointer;
+            font-family: inherit;
         }
         .btn-primary:hover {
             background: #4f46e5;
@@ -167,6 +172,8 @@
             border: 2px solid #e2e8f0;
             transition: all 0.3s;
             display: inline-block;
+            cursor: pointer;
+            font-family: inherit;
         }
         .btn-secondary:hover {
             border-color: #6366f1;
@@ -455,6 +462,59 @@
         .requisites strong {
             color: #1a1a2e;
         }
+        .requisites a {
+            color: #6366f1;
+            text-decoration: none;
+        }
+        .requisites a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== ВСПЛЫВАЮЩЕЕ УВЕДОМЛЕНИЕ ===== */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a2e;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-size: 16px;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+            max-width: 90%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+        .toast .close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 20px;
+            cursor: pointer;
+            margin-left: 16px;
+            transition: color 0.2s;
+            font-family: inherit;
+        }
+        .toast .close:hover {
+            color: white;
+        }
+        .toast-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
 
         /* ===== АДАПТИВ ===== */
         @media (max-width: 1024px) {
@@ -520,6 +580,11 @@
             .hero-stats {
                 gap: 24px;
             }
+            .toast {
+                top: 10px;
+                padding: 14px 20px;
+                font-size: 14px;
+            }
         }
         @media (max-width: 480px) {
             .hero-content h1 {
@@ -537,6 +602,15 @@
     </style>
 </head>
 <body>
+
+    <!-- ===== ВСПЛЫВАЮЩЕЕ УВЕДОМЛЕНИЕ ===== -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <span>⚠️ Ведутся технические работы. Пожалуйста, напишите нам на <strong>info@promocore.digital</strong></span>
+            <button class="close" onclick="hideToast()">✕</button>
+        </div>
+    </div>
+
     <!-- ===== ШАПКА ===== -->
     <header class="header">
         <div class="container">
@@ -545,8 +619,7 @@
                 <ul class="nav-links">
                     <li><a href="/#services">Услуги</a></li>
                     <li><a href="/#about">О нас</a></li>
-                    <li><a href="/#clients">Кейсы</a></li>
-                    <li><a href="#" class="nav-btn">Связаться</a></li>
+                    <li><button class="nav-btn" onclick="showToast()">Связаться</button></li>
                 </ul>
             </nav>
 
@@ -555,8 +628,8 @@
                     <h1>Реклама, которая <span>приносит</span> результат</h1>
                     <p>Digital-агентство полного цикла. Запускаем рекламу в Telegram Ads и VK, которая окупается и масштабирует ваш IT-продукт.</p>
                     <div class="hero-buttons">
-                        <a href="#" class="btn-primary">Обсудить проект</a>
-                        <a href="#" class="btn-secondary">Наши кейсы</a>
+                        <button class="btn-primary" onclick="showToast()">Обсудить проект</button>
+                        <a href="/#clients" class="btn-secondary">Наши кейсы</a>
                     </div>
                     <div class="hero-stats">
                         <div class="stat">
@@ -663,7 +736,7 @@
         <div class="container">
             <h2>Готовы обсудить ваш проект?</h2>
             <p>Оставьте заявку — мы свяжемся с вами в течение 24 часов и предложим стратегию.</p>
-            <a href="#" class="btn-primary">Написать нам</a>
+            <button class="btn-primary" onclick="showToast()">Написать нам</button>
         </div>
     </section>
 
@@ -678,32 +751,32 @@
                 <div>
                     <h4>Услуги</h4>
                     <ul>
-                        <li><a href="#">Telegram Ads</a></li>
-                        <li><a href="#">VK Реклама</a></li>
-                        <li><a href="#">Аналитика</a></li>
-                        <li><a href="#">Стратегия</a></li>
+                        <li><a href="/#services">Telegram Ads</a></li>
+                        <li><a href="/#services">VK Реклама</a></li>
+                        <li><a href="/#services">Аналитика</a></li>
+                        <li><a href="/#services">Стратегия</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4>Компания</h4>
                     <ul>
-                        <li><a href="#">О нас</a></li>
-                        <li><a href="#">Кейсы</a></li>
-                        <li><a href="#">Блог</a></li>
-                        <li><a href="#">Контакты</a></li>
+                        <li><a href="/#about">О нас</a></li>
+                        <li><a href="/#clients">Кейсы</a></li>
+                        <li><a href="/">Блог</a></li>
+                        <li><button class="nav-btn" style="background: transparent; color: #4a4a6a; box-shadow: none; padding: 4px 0; font-size: 15px; font-weight: 400;" onclick="showToast()">Контакты</button></li>
                     </ul>
                 </div>
                 <div>
                     <h4>Контакты</h4>
                     <ul>
-                        <li><a href="mailto:info@promocore.digital">info@promocore.digital</a></li>
+                        <li><a href="#" onclick="showToast(); return false;">info@promocore.digital</a></li>
                         <li><a href="tel:+79177011146">+7 (917) 701-11-46</a></li>
                         <li>Москва, ул. Новодмитровская 2</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- РЕКВИЗИТЫ (вымышленные, только для сайта) -->
+            <!-- РЕКВИЗИТЫ -->
             <div class="requisites">
                 <p>
                     <strong>ООО «ПромоКор»</strong> &nbsp;|&nbsp;
@@ -715,8 +788,8 @@
                     Юридический адрес: 127015, г. Москва, ул. Новодмитровская, д. 2, корп. 1, оф. 45
                 </p>
                 <p style="margin-top: 4px; font-size: 12px; color: #7a7a9a;">
-                    <a href="/offer.html" style="color: #6366f1; text-decoration: none;">Публичная оферта</a> &nbsp;|&nbsp;
-                    <a href="/privacy.html" style="color: #6366f1; text-decoration: none;">Политика конфиденциальности</a>
+                    <a href="/offer.html">Публичная оферта</a> &nbsp;|&nbsp;
+                    <a href="/privacy.html">Политика конфиденциальности</a>
                 </p>
             </div>
 
@@ -725,5 +798,35 @@
             </div>
         </div>
     </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            // Автоматически скрыть через 6 секунд
+            clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(() => {
+                hideToast();
+            }, 6000);
+        }
+
+        function hideToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('show');
+        }
+
+        // Закрыть по клику вне уведомления
+        document.addEventListener('click', function(event) {
+            const toast = document.getElementById('toast');
+            if (toast.classList.contains('show')) {
+                const isClickInside = toast.contains(event.target);
+                if (!isClickInside) {
+                    hideToast();
+                }
+            }
+        });
+    </script>
+
 </body>
 </html>
